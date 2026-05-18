@@ -14,7 +14,7 @@ def __pre_orden(sub_arbol):
         __pre_orden(sub_arbol.der)
 
 def pre_orden_str(arbol_bin, separador="|>"):
-    return __pre_orden_str(arbol_bin.raiz, separador).strip("|>")
+    return __pre_orden_str(arbol_bin.raiz, separador).strip(separador)
 
 def __pre_orden_str(sub_arbol, separador="|>"):
     cadena = ""
@@ -34,9 +34,32 @@ def __in_orden(sub_arbol):
         __in_orden(sub_arbol.der)
 
 def in_orden_str(arbol_bin, separador=">"):
-    return __in_orden_str(arbol_bin.raiz, separador)
+    return __in_orden_str(arbol_bin.raiz, separador).strip(separador)
 
 def __in_orden_str(sub_arbol, separador=">"):
     cadena = ""
     if sub_arbol:
-        pass
+        cadena += f"{__in_orden_str(sub_arbol.izq, separador)}"
+        cadena += f"{sub_arbol.clave}{separador}"
+        cadena += f"{__in_orden_str(sub_arbol.der, separador)}"
+    return cadena
+
+def post_orden(arbol_bin):
+    __post_orden(arbol_bin.raiz)
+
+def __post_orden(sub_arbol):
+    if sub_arbol:
+        __post_orden(sub_arbol.izq)
+        __post_orden(sub_arbol.der)
+        __ver_nodo(sub_arbol)
+
+def post_orden_str(arbol_bin, separador=">|"):
+    return __post_orden_str(arbol_bin.raiz, separador)
+
+def __post_orden_str(sub_arbol, separador=">|"):
+    cadena = ""
+    if sub_arbol:
+        cadena += f"{__post_orden_str(sub_arbol.izq, separador)}"
+        cadena += f"{__post_orden_str(sub_arbol.der, separador)}"
+        cadena += f"{sub_arbol.clave}{separador}"
+    return cadena
