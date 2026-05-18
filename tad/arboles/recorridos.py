@@ -19,9 +19,15 @@ def pre_orden_str(arbol_bin, separador="|>"):
 def __pre_orden_str(sub_arbol, separador="|>"):
     cadena = ""
     if sub_arbol:
+<<<<<<< HEAD
         cadena += f"{sub_arbol.clave}{separador}"
         cadena += f"{__pre_orden_str(sub_arbol.izq)}"
         cadena += f"{__pre_orden_str(sub_arbol.der)}"
+=======
+        cadena += f"{sub_arbol.clave}|>"
+        cadena += f"{__pre_orden_str(sub_arbol.izq)}|>"
+        cadena += f"{__pre_orden_str(sub_arbol.der)}|>"
+>>>>>>> 7e3194077bad82ca04dee76295bb7c860f5b62c7
     return cadena
 
 def in_orden(arbol_bin):
