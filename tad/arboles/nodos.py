@@ -11,4 +11,4 @@ class NodoArbolBinario:
         return bool(self.izq or self.der)
 
     def __repr__(self):
-        return self.clave
+        return self.__str__()

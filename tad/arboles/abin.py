@@ -19,28 +19,7 @@ class ArbolBinario:
         return sub_arbol
 
     def es_vacio(self):
-        return bool(self.raiz)
-
-    def __str__(self):
-        return self.__str_recursivo(self.raiz, "", True)
-
-    def __str_recursivo(self, nodo, prefijo, es_ultimo):
-        if not nodo:
-            return ""
-
-        resultado = prefijo + ("└── " if es_ultimo else "├── ") + str(nodo.clave) + "\n"
-
-        hijos = []
-        if nodo.izq:
-            hijos.append((nodo.izq, False))
-        if nodo.der:
-            hijos.append((nodo.der, True))
-
-        for i, (hijo, es_ultimo_hijo) in enumerate(hijos):
-            nuevo_prefijo = prefijo + ("    " if es_ultimo else "│   ")
-            resultado += self.__str_recursivo(hijo, nuevo_prefijo, i == len(hijos) - 1)
-
-        return resultado
+        return self.raiz is None
 
     def buscar(self, clave_buscar):
         return self.__buscar(self.raiz, clave_buscar)

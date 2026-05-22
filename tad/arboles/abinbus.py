@@ -2,12 +2,11 @@ from tad.arboles.abin import ArbolBinario
 from tad.arboles.excepciones import DuplicatedKeyError, HomogeneityError
 from tad.arboles.nodos import NodoArbolBinario
 
-
 class ArbolBinarioBusqueda(ArbolBinario):
     def agregar(self, nueva_clave):
         if self.raiz:
             if not isinstance(nueva_clave, type(self.raiz.clave)):
-                raise HomogeneityError(nueva_clave, type(self.raiz.clave))
+                raise HomogeneityError(type(nueva_clave), type(self.raiz.clave), "agregar")
         self.raiz = self.__agregar(self.raiz, nueva_clave)
 
     def __agregar(self, sub_arbol, nueva_clave):
@@ -17,7 +16,7 @@ class ArbolBinarioBusqueda(ArbolBinario):
             sub_arbol.izq = self.__agregar(sub_arbol.izq, nueva_clave)
         elif nueva_clave > sub_arbol.clave: #Dirijo busqueda por la derecha
             sub_arbol.der = self.__agregar(sub_arbol.der, nueva_clave)
-        else: #No puede ser igual a un sub arbol que ya existe
+        else:
             raise DuplicatedKeyError (nueva_clave)
         return sub_arbol
 
@@ -29,7 +28,7 @@ class ArbolBinarioBusqueda(ArbolBinario):
     def __maximo(self, sub_arbol):
         if sub_arbol.der:
             return self.__maximo(sub_arbol.der)
-        return sub_arbol.der
+        return sub_arbol.clave
 
     def minimo(self):
         if not self.raiz:
@@ -39,9 +38,12 @@ class ArbolBinarioBusqueda(ArbolBinario):
     def __minimo(self, sub_arbol):
         if sub_arbol.izq:
             return self.__minimo(sub_arbol.izq)
-        return sub_arbol.izq
+        return sub_arbol.clave
 
     def buscar(self, clave):
+        if self.raiz:
+            if not isinstance(clave, type(self.raiz.clave)):
+                raise HomogeneityError(type(clave), type(self.raiz.clave), "buscar")
         return self.__buscar(self.raiz, clave)
 
     def __buscar(self, sub_arbol, clave):
@@ -67,6 +69,9 @@ class ArbolBinarioBusqueda(ArbolBinario):
 
 
     def suprimir(self, clave_suprimir, mayor=True):
+        if self.raiz:
+            if not isinstance(clave_suprimir, type(self.raiz.clave)):
+                raise HomogeneityError(type(clave_suprimir), type(self.raiz.clave), "suprimir")
         exitoso, self.raiz = self.__suprimir(self.raiz, clave_suprimir, mayor)
         return exitoso
 
